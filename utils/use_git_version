@@ -1,0 +1,6 @@
+# retrieve the version from git
+last_git_tag=$(git describe --tags --dirty=-d --abbrev=1 --first-parent)
+last_git_tag=${last_git_tag:-$(git describe --all --dirty=-d --abbrev=1 --first-parent)}
+last_git_tag=${last_git_tag/\//_}
+# complete image tag 
+export last_git_tag=${image_version}

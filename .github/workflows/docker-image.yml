@@ -1,0 +1,38 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - id: semver_step
+      uses: paulhatch/semantic-version@v3.2
+      with:
+        # The prefix to use to identify tags
+        branch: "master"
+        tag_prefix: ""
+        format: "${major}.${minor}.${patch}-prerelease.${increment}"
+        change_path: "."
+        short_tags: true
+        # If this is set to true, *every* commit will be treated as a new version.
+        bump_each_commit: false
+    - name: Build the Docker image
+      env:
+        image_version: ${{ steps.semver_step.outputs.version_tag }}
+      run: |
+        echo ${image_version}
+        cd $GITHUB_WORKSPACE
+        docker --version
+        ./utils/setup_emulation
+        docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
+        ./dockerbuild
+        ./dockerpush
+        

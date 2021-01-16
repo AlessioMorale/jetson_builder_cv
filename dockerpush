@@ -1,0 +1,5 @@
+#!/bin/bash
+set -ex
+source ./environment
+docker push $docker_tag 
+docker push $docker_latest
