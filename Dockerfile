@@ -1,9 +1,9 @@
-FROM alessiomorale/jetson-builder:r32.4.4_1.0.1
+FROM alessiomorale/jetson-builder:r32.4.4_1.1
 # install the base environment and all build tools
 ARG OPENCV_VERSION="4.3.0"
 ARG OPENCV_DO_TEST="FALSE"
 # note: 8 jobs will fail on Nano. Try 1 instead.
-ARG OPENCV_BUILD_JOBS="4"
+ARG OPENCV_BUILD_JOBS="6"
 # required for apt-get -y to work properly:
 ARG DEBIAN_FRONTEND=noninteractive
 
