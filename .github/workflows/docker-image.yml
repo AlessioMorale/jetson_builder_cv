@@ -24,6 +24,10 @@ jobs:
         short_tags: true
         # If this is set to true, *every* commit will be treated as a new version.
         bump_each_commit: false
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
     - name: Build the Docker image
       env:
         image_version: ${{ steps.semver_step.outputs.version_tag }}
@@ -31,7 +35,6 @@ jobs:
         echo ${image_version}
         cd $GITHUB_WORKSPACE
         docker --version
-        ./utils/setup_emulation
         docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
         ./dockerbuild
         ./dockerpush

@@ -5,12 +5,14 @@ echo building $docker_tag
 
 [ -e secrets.txt ] && rm secrets.txt
 
-cat << EOT >> secrets.txt
+cat << EOT > $(pwd)/secrets.txt
 export CACHE_GIT_URL=$CACHE_GIT_URL
 export CACHE_ARCHIVE=$CACHE_ARCHIVE
 export CACHE_BRANCH=$CACHE_BRANCH
 EOT
 
+ls -al $(pwd)/secrets.txt
+docker version
 DOCKER_BUILDKIT=1 docker build \
     -t $docker_tag \
     -t $docker_latest \
