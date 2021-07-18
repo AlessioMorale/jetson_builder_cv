@@ -1,7 +1,7 @@
 #image to be built
 export image_name='alessiomorale/jetson-builder-cv'
 export opencv_version="4.4.0"
-export image_base_tag=r32.4.4_cv${opencv_version}
+export image_base_tag=r32.5.0_cv${opencv_version}
 
 
 #tags built with this pipeline.
