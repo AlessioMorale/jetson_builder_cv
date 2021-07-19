@@ -5,19 +5,16 @@ echo building $docker_tag
 
 [ -e secrets.txt ] && rm secrets.txt
 
-cat << EOT > $(pwd)/secrets.txt
-export CACHE_GIT_URL=$CACHE_GIT_URL
-export CACHE_ARCHIVE=$CACHE_ARCHIVE
-export CACHE_BRANCH=$CACHE_BRANCH
-EOT
+echo "export CACHE_GIT_URL=$CACHE_GIT_URL" >> secrets.txt
+echo "export CACHE_ARCHIVE=$CACHE_ARCHIVE" >> secrets.txt
+echo "export CACHE_BRANCH=$CACHE_BRANCH" >> secrets.txt
 
 ls -al $(pwd)/secrets.txt
-docker version
 DOCKER_BUILDKIT=1 docker build \
     -t $docker_tag \
     -t $docker_latest \
     --build-arg OPENCV_VERSION=$opencv_version \
     --build-arg OPENCV_DO_TEST="FALSE" \
-    --build-arg OPENCV_BUILD_JOBS="4" .
+    --build-arg OPENCV_BUILD_JOBS="10" \
     --secret id=secrets,src="$(pwd)/secrets.txt" \
     .

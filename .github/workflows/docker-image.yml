@@ -30,11 +30,14 @@ jobs:
       uses: docker/setup-buildx-action@v1
     - name: Build the Docker image
       env:
+        CACHE_GIT_URL: ${{ secrets.CACHE_GIT_URL }}
+        CACHE_ARCHIVE: ${{ secrets.CACHE_ARCHIVE }}
+        CACHE_BRANCH: ${{ secrets.CACHE_BRANCH }}
         image_version: ${{ steps.semver_step.outputs.version_tag }}
       run: |
         echo ${image_version}
         cd $GITHUB_WORKSPACE
-        docker --version
+        docker version
         docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
         ./dockerbuild
         ./dockerpush

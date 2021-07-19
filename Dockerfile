@@ -12,12 +12,14 @@ SHELL ["/bin/bash", "-c"]
 WORKDIR /usr/local/src/build_opencv
 ADD https://github.com/AlessioMorale/nano_build_opencv/raw/jetson_builder/build_opencv.sh .
 
-RUN --mount=type=secret,id=secrets \
-    ls -al /run/secrets/* && \
-    source /run/secrets/secrets && \
+ENV CCACHE_DIR=/ccache
+RUN mkdir -p ${CCACHE_DIR}
+RUN --mount=type=secret,id=secrets,dst=/secrets \
+    --mount=type=cache,target=/ccache \
+    ls -al /secrets && \
+    source /secrets && \
     source /root/setup_ccache && \
     download_cache && \
     touch /.dockerenv && \
     time /bin/bash ./build_opencv.sh && \
-    upload_cache && \
-    remove_cache
+    upload_cache
