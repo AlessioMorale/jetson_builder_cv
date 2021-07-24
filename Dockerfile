@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
-FROM alessiomorale/jetson-builder:r32.5.0_1.1.1
+FROM alessiomorale/jetson-builder:r32.5.0_1.2.1
 # install the base environment and all build tools
-ARG OPENCV_VERSION="4.3.0"
+ARG OPENCV_VERSION="4.4.0"
 ARG OPENCV_DO_TEST="FALSE"
 # note: 8 jobs will fail on Nano. Try 1 instead.
 ARG OPENCV_BUILD_JOBS="10"
