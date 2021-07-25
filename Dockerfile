@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM alessiomorale/jetson-builder:r32.5.0_1.3
+FROM alessiomorale/jetson-builder:r32.5.0_1.3.3
 # install the base environment and all build tools
 ARG OPENCV_VERSION="4.4.0"
 ARG OPENCV_DO_TEST="FALSE"
